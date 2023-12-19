@@ -1,8 +1,8 @@
 import random
 
 # SETUP FUNCTIONS
-class cube2(solved=True):
-    def __init__():
+class cube2:
+    def __init__(self,solved=True):
         self.size = 2
         self.solved = solved
         self.cube = self.solved_cube()
@@ -14,63 +14,127 @@ class cube2(solved=True):
         self.lf  = self.cube[2]
         self.tf  = self.cube[4]
         self.bof = self.cube[5]
-        self.operations= {    0: self.trl(self.cube)[0],
-                              1: self.trr(self.cube)[0],
-                              2: self.brl(self.cube)[0],
-                              3: self.brr(self.cube)[0],
-                              4: self.lcd(self.cube)[0],
-                              5: self.lcu(self.cube)[0],
-                              6: self.rcd(self.cube)[0],
-                              7: self.rcu(self.cube)[0],
-                              8: self.ffcl(self.cube)[0],
-                              9: self.ffcc(self.cube)[0],
-                              10: self.bfcc(self.cube)[0],
-                              11: self.bfcl(self.cube)[0]
+        self.operations= {    0: self.trl()[0],
+                              1: self.trr()[0],
+                              2: self.brl()[0],
+                              3: self.brr()[0],
+                              4: self.lcd()[0],
+                              5: self.lcu()[0],
+                              6: self.rcd()[0],
+                              7: self.rcu()[0],
+                              8: self.ffcl()[0],
+                              9: self.ffcc()[0],
+                              10: self.bfcc()[0],
+                              11: self.bfcl()[0]
                          }
         # read this as, 
         # if action==top-row-left: new_cube[0][0][0]=self.cube[3][1].copy()[0]
-        self.actions = { new_cube[0][0][0] : { trl : self.cube[3][1].copy()[0],
-                                               trr : self.cube[2][0].copy()[1],
-                                               lcd : self.cube[4][0].copy()[0],
-                                               lcu : self.cube[5][1].copy()[1],
-                                               ffcl: self.cube[0][1].copy()[0],
-                                               ffcc: self.cube[0][0].copy()[1],
+        self.actions = { new_cube[0][0][0] : { 'trl' : self.cube[3][1].copy()[0],
+                                               'trr' : self.cube[2][0].copy()[1],
+                                               'lcd' : self.cube[4][0].copy()[0],
+                                               'lcu' : self.cube[5][1].copy()[1],
+                                               'ffcl': self.cube[0][1].copy()[0],
+                                               'ffcc': self.cube[0][0].copy()[1]
                                              },
-                         new_cube[0][0][1] : { trl : self.cube[3][0].copy()[0],
-                                               trr : self.cube[2][1].copy()[1],
-                                               rcd : self.cube[4][0].copy()[1],
-                                               rcu : self.cube[5][1].copy()[0],
-                                               ffcl: self.cube[0][0].copy()[0],
-                                               ffcc: self.cube[0][1].copy()[1],                                                 
+                         new_cube[0][0][1] : { 'trl' : self.cube[3][0].copy()[0],
+                                               'trr' : self.cube[2][1].copy()[1],
+                                               'rcd' : self.cube[4][0].copy()[1],
+                                               'rcu' : self.cube[5][1].copy()[0],
+                                               'ffcl': self.cube[0][0].copy()[0],
+                                               'ffcc': self.cube[0][1].copy()[1]                                                
                                              },
-                         new_cube[0][1][0] : { brl :
-                                               brr :
-                                               lcd :
-                                               lcu :
-                                               ffcl:
-                                               ffcc:
+                         new_cube[0][1][0] : { 'brl' : self.cube[3][1].copy()[1],
+                                               'brr' : self.cube[2][0].copy()[0],
+                                               'lcd' : self.cube[4][1].copy()[0],
+                                               'lcu' : self.cube[5][0].copy()[1],
+                                               'ffcl': self.cube[0][1].copy()[1],
+                                               'ffcc': self.cube[0][0].copy()[0]
                                              },
-                         new_cube[0][1][1] : { trl : ,
-                                               trr : ,
-                                               rcd : ,
-                                               rcu : ,
-                                               ffcl: ,
-                                               ffcc: ,                                                 
+                         new_cube[0][1][1] : { 'brl' : self.cube[3][0].copy()[1],
+                                               'brr' : self.cube[2][1].copy()[0],
+                                               'rcd' : self.cube[4][1].copy()[1],
+                                               'rcu' : self.cube[5][0].copy()[0],
+                                               'ffcl': self.cube[0][0].copy()[1],
+                                               'ffcc': self.cube[0][1].copy()[0]                                                 
                                              },
-             new_cube[1][0][0] : {},
-             new_cube[1][0][1] : {},
-             new_cube[1][1][0] : {},
-             new_cube[1][1][1] : {},
-            
-             new_cube[2][0][0] : {},
-             new_cube[2][0][1] : {},
-             new_cube[2][1][0] : {},
-             new_cube[2][1][1] : {},
-            
-             new_cube[3][0][0] : {},
-             new_cube[3][0][1] : {},
-             new_cube[3][1][0] : {},
-             new_cube[3][1][1] : {},
+                         new_cube[1][0][0] : { 'trl' : self.cube[2][1].copy()[1],
+                                               'trr' : self.cube[3][0].copy()[0],
+                                               'rcd' : self.cube[5][1].copy()[0],
+                                               'rcu' : self.cube[4][0].copy()[1],
+                                               'bfcl': self.cube[1][0].copy()[1],
+                                               'bfcc': self.cube[0][1].copy()[0]
+                                             },
+                         new_cube[1][0][1] : { 'trl' : self.cube[2][0].copy()[1],
+                                               'trr' : self.cube[3][1].copy()[0],
+                                               'lcd' : self.cube[5][1].copy()[1],
+                                               'lcu' : self.cube[4][0].copy()[0],
+                                               'bfcl': self.cube[1][1].copy()[1],
+                                               'bfcc': self.cube[0][0].copy()[0]
+                                             },
+                         new_cube[1][1][0] : { 'brl' : self.cube[2][1].copy()[0],
+                                               'brr' : self.cube[3][0].copy()[1],
+                                               'rcd' : self.cube[5][0].copy()[0],
+                                               'rcu' : self.cube[4][1].copy()[1],
+                                               'bfcl': self.cube[1][0].copy()[0],
+                                               'bfcc': self.cube[0][1].copy()[1]
+                                             },
+                         new_cube[1][1][1] : { 'brl' : self.cube[2][0].copy()[0],
+                                               'brr' : self.cube[3][1].copy()[1],
+                                               'lcd' : self.cube[5][0].copy()[1],
+                                               'lcu' : self.cube[4][1].copy()[0],
+                                               'bfcl': self.cube[1][1].copy()[0],
+                                               'bfcc': self.cube[0][0].copy()[1]
+                                             },
+                         new_cube[2][0][0] : { 'brl' : self.cube[0][1].copy()[0],
+                                               'brr' : self.cube[1][1].copy()[1],
+                                               'lcd' : self.cube[2][1].copy()[0],
+                                               'lcu' : self.cube[2][0].copy()[1],
+                                               'bfcl': self.cube[5][0].copy()[0],
+                                               'bfcc': self.cube[4][0].copy()[0]
+                                             },
+                         new_cube[2][0][1] : { 'trl' : self.cube[0][0].copy()[0],
+                                               'trr' : self.cube[1][0].copy()[1],
+                                               'lcd' : self.cube[2][0].copy()[0],
+                                               'lcu' : self.cube[2][1].copy()[1],
+                                               'bfcl': self.cube[5][0].copy()[1],
+                                               'bfcc': self.cube[4][0].copy()[1]
+                                             },
+                         new_cube[2][1][0] : { 'brl' : self.cube[0][1].copy()[1],
+                                               'brr' : self.cube[1][1].copy()[0],
+                                               'lcd' : self.cube[2][1].copy()[1],
+                                               'lcu' : self.cube[2][0].copy()[0],
+                                               'ffcl': self.cube[5][1].copy()[0],
+                                               'ffcc': self.cube[4][1].copy()[0]
+                                             },
+                         new_cube[2][1][1] : { 'trl': self.cube[0][0].copy()[1],
+                                               'trr' : self.cube[1][0].copy()[0],
+                                               'lcd' : self.cube[2][0].copy()[1],
+                                               'lcu' : self.cube[2][1].copy()[0],
+                                               'ffcl': self.cube[5][1].copy()[1],
+                                               'ffcc': self.cube[4][1].copy()[1]
+                                             },
+                         new_cube[3][0][0] : { 'trl' : self.cube[1][0].copy()[0],
+                                               'trr' : self.cube[0][0].copy()[1],
+                                               'rcd' : self.cube[3][0].copy()[1],
+                                               'rcu' : self.cube[3][1].copy()[0],
+                                               'bfcl': self.cube[4][0].copy()[0],
+                                               'bfcc': self.cube[5][0].copy()[0]
+                                             },
+                         new_cube[3][0][1] : { 'brl' : self.cube[1][1].copy()[0],
+                                               'brr' : self.cube[0][1].copy()[1],
+                                               'rcd' : self.cube[3][1].copy()[1],
+                                               'rcu' : self.cube[3][0].copy()[0],
+                                               'bfcl': self.cube[4][0].copy()[1],
+                                               'bfcc': self.cube[5][0].copy()[1]
+                                             },
+                         new_cube[3][1][0] : { 'brl' : 1,
+                                               'brr' : 1,
+                                               'rcd' : 1,
+                                               'rcu' : 1,
+                                               'bfcl': 1,
+                                               'bfcc': 1
+                                             },
+                         new_cube[3][1][1] : {},
             
              new_cube[4][0][0] : {},
              new_cube[4][0][1] : {},
@@ -133,7 +197,7 @@ class cube2(solved=True):
                                    
     
     # TOP ROW
-    def top_row_left(self):
+    def trl(self):
         new_cube = self.copy_cube()
         # JUST FOR 2X2 CUBE FOR NOW
         # top rows: front- cube[0][0][0] & cube[0][0][1], back- cube[1][0][1] & cube[1][0][0], 
@@ -159,7 +223,7 @@ class cube2(solved=True):
         # now pass on the new cube and the appended list of reached states
         return (new_cube,cube)
 
-    def top_row_right(cube,size):
+    def trr(cube,size):
         new_cube = cube_setup.copy_cube(cube,size)
         # JUST FOR 2X2 CUBE FOR NOW
         # top rows: front- cube[0][0][0] & cube[0][0][1], back- cube[1][0][1] & cube[1][0][0], 
@@ -186,7 +250,7 @@ class cube2(solved=True):
         return (new_cube,cube)
 
     # BOTTOM ROW
-    def bottom_row_left(cube,size):
+    def brl(cube,size):
         new_cube = cube_setup.copy_cube(cube,size)
         # JUST FOR 2X2 CUBE FOR NOW
         # bottom rows: front- cube[0][1][0] & cube[0][1][1], back- cube[1][1][1] & cube[1][1][0], 
@@ -212,7 +276,7 @@ class cube2(solved=True):
         # now pass on the new cube and the appended list of reached states
         return (new_cube,cube)
 
-    def bottom_row_right(cube,size):
+    def brr(cube,size):
         new_cube = cube_setup.copy_cube(cube,size)
         # JUST FOR 2X2 CUBE FOR NOW
         # bottom rows: front- cube[0][1][0] & cube[0][1][1], back- cube[1][1][1] & cube[1][1][0], 
@@ -239,7 +303,7 @@ class cube2(solved=True):
         return (new_cube,cube)
 
     # LEFT COLUMN
-    def left_col_down(cube,size):
+    def lcd(cube,size):
         new_cube = cube_setup.copy_cube(cube,size)
         # JUST FOR 2X2 CUBE FOR NOW
         # left cols: front- cube[0][0][0] & cube[0][1][0], back- cube[1][0][1] & cube[1][1][1], 
@@ -265,7 +329,7 @@ class cube2(solved=True):
         # now pass on the new cube and the appended list of reached states
         return (new_cube,cube)
 
-    def left_col_up(cube,size):
+    def lcu(cube,size):
         new_cube = cube_setup.copy_cube(cube,size)
         # JUST FOR 2X2 CUBE FOR NOW
         # left cols: front- cube[0][0][0] & cube[0][1][0], back- cube[1][0][1] & cube[1][1][1], 
@@ -292,7 +356,7 @@ class cube2(solved=True):
         return (new_cube,cube)
 
     # RIGHT COLUMN
-    def right_col_down(cube,size):
+    def rcd(cube,size):
         new_cube = cube_setup.copy_cube(cube,size)
         # JUST FOR 2X2 CUBE FOR NOW
         # right cols: front- cube[0][0][1] & cube[0][1][1], back- cube[1][0][0] & cube[1][1][0], 
@@ -318,7 +382,7 @@ class cube2(solved=True):
         # now pass on the new cube and the appended list of reached states
         return (new_cube,cube)
 
-    def right_col_up(cube,size):
+    def rcu(cube,size):
         new_cube = cube_setup.copy_cube(cube,size)
         # JUST FOR 2X2 CUBE FOR NOW
         # right cols: front- cube[0][0][1] & cube[0][1][1], back- cube[1][0][0] & cube[1][1][0], 
@@ -345,7 +409,7 @@ class cube2(solved=True):
         return (new_cube,cube)
 
     # FRONT FACE
-    def front_face_clockwise(cube,size):
+    def ffcl(cube,size):
         new_cube = cube_setup.copy_cube(cube,size)
         # JUST FOR 2X2 CUBE FOR NOW
         # front face surrounding cols: left- cube[2][1][1] & cube[2][1][0], right- cube[3][1][1] & cube[3][1][0], 
@@ -371,7 +435,7 @@ class cube2(solved=True):
         # now pass on the new cube and the appended list of reached states
         return (new_cube,cube)
 
-    def front_face_counterclockwise(cube,size):
+    def ffcc(cube,size):
         new_cube = cube_setup.copy_cube(cube,size)
         # JUST FOR 2X2 CUBE FOR NOW
         # front face surrounding cols: left- cube[2][1][1] & cube[2][1][0], right- cube[3][1][1] & cube[3][1][0], 
@@ -398,7 +462,7 @@ class cube2(solved=True):
         return (new_cube,cube)
 
     # BACK FACE
-    def back_face_clockwise(cube,size):
+    def bfcl(cube,size):
         new_cube = cube_setup.copy_cube(cube,size)
         # JUST FOR 2X2 CUBE FOR NOW
         # back face surrounding cols: left- cube[2][0][1] & cube[2][0][0], right- cube[3][0][1] & cube[3][0][0], 
@@ -424,7 +488,7 @@ class cube2(solved=True):
         # now pass on the new cube and the appended list of reached states
         return (new_cube,cube)
 
-    def back_face_counterclockwise(cube,size):
+    def bfcc(cube,size):
         new_cube = cube_setup.copy_cube(cube,size)
         # JUST FOR 2X2 CUBE FOR NOW
         # back face surrounding cols: left- cube[2][0][1] & cube[2][0][0], right- cube[3][0][1] & cube[3][0][0], 
